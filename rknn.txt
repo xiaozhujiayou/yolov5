@@ -1,0 +1,20 @@
+pip show rknn-toolkit2  
+#查看版本
+pip uninstall rknn-toolkit2 -y
+#删除rknn
+
+conda activate rknn
+//激活环境
+
+sudo dhclient -v ens33  # -v显示详细过程
+#手动触发DHCP获取IP
+
+yolo export model=best.pt format=rknn
+
+
+roscore
+roslaunch astra_camera gemi.launch
+python3 tf_diag.py
+
+rosrun astra_camera dataa.py _color_topic:=/camera/rgb/image_raw _depth_topic:=/camera/depth/image_raw
+rosrun astra_camera datab.py _color_topic:=/camera/rgb/image_raw _depth_topic:=/camera/depth_registered/image_raw

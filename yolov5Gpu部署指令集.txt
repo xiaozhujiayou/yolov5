@@ -1,0 +1,83 @@
+  一，准备工作：
+
+1.下载Anaconda  版本: Anaconda3-2022.05-Windows-x86_64 .exe 并配置环境变量
+
+2、创建Conda新环境：
+conda create --prefix D:/Anaconda/envs/yolov5 python=3.8 //在指定位置创建环境
+conda create --name yolov5 python=3.8
+
+conda create --name labelimg python=3.9
+conda create --name rknn python=3.9
+
+//激活环境
+conda activate yolov5
+librknnrt
+
+//查看conda环境
+conda list
+conda env list
+
+//删除指定环境
+conda env remove --name  D:\Anaconda\yolov5
+conda env remove --name paddle
+conda env remove --name yolov5
+//退出环境
+conda deactivate
+
+//配置清华镜像源
+清华源：pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+2.安装pytorch
+pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0
+可以下载.whl文件加速：download.pytorch.org/whl/torch/   
+https://download.pytorch.org/whl/torch_stable.html
+cu111/torch-1.8.1%2Bcu111-cp36-cp36m-win_amd64.whl
+
+3.安装配置
+(安装之前把 requirements.txt中的torch配置选项注释掉）
+pip install -r requirements.txt
+
+4.安装特定版本numpy和pillow
+pip install Pillow==9.5.0
+pip install numpy==1.20.3 
+
+
+
+#测试
+python detect.py --weights best1.pt --img 640 --conf 0.25 --source data/images/
+
+
+--device 0
+
+ 20
+#训练
+
+python train.py  --epochs 60 --weights yolov5s.pt  --device 0 --batch -1 --workers 12 --patience 10
+
+python train.py  --epochs 60 --weights yolov5s.pt  --device cpu --batch -1 --workers 8 --patience 100
+
+3.pip源码安装 cd 到yolo界面
+pip install -r requirements.txt 
+
+#安转onnx
+pip install onnx==1.16.1 -i http://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com
+#安装简化
+pip install onnx-simplifier -i http://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com
+pip install onnxruntime -i http://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com
+#模型简化（参数一定要全）导出
+python export.py --weights yolov5s.pt --img 640 640 --batch 1 --train --simplify --include onnx
+python export.py --weights best.pt --img 320 320 --batch 1 --train --simplify --include onnx
+python export.py --weights best6.pt --img 640 640 --batch 1  --include onnx
+
+//onnx 转换 ncnn
+onnx2ncnn yolov5s.onnx yolov5s.param yolov5s.bin
+onnx2ncnn last.onnx best.param best.bin
+
+python demo.py
+
+pip install Pillow -i http://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com
+
+//腾讯源
+-i http://mirrors.cloud.tencent.com/pypi/simple --trusted-host mirrors.cloud.tencent.com
